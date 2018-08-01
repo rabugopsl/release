@@ -3207,7 +3207,26 @@ presubmits:
         - --artifact-dir=$(ARTIFACTS)
         - --secret-dir=/usr/local/e2e-aws-cluster-profile
         - --template=/usr/local/e2e-aws
-        - --target=e2e-aws
+        - --target=e2e-aws 
+
+  - name: test-yaml-lint
+      trigger: "(?m)^/test yaml-lint"
+      rerun_command: "/test yaml-lint"
+      context: ci/prow/test-yaml-lint
+      always_run: true
+      skip_report: false
+      agent: kubernetes
+      decorate: true
+      spec:
+        containers:
+        - image: quay.io/coreos/yamllint
+          command:
+          - yamllint
+          args:
+          - --config-data
+          - "{extends: default, rules: {line-length: {level: warning, max: 120}}}"
+          - ./examples/
+          - ./installer/
 
   openshift/ci-vm-operator:
   - name: pull-ci-vm-operator-build
