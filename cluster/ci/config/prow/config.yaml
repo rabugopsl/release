@@ -3210,10 +3210,10 @@ presubmits:
         - --template=/usr/local/e2e-aws
         - --target=e2e-aws 
 
-  - name: installer-yaml-lint
-      trigger: "(?m)^/yaml-lint"
-      rerun_command: "/yaml-lint"
-      context: ci/prow/lint
+  - name: yaml-lint
+      trigger: "(?m)^/test yaml-lint"
+      rerun_command: "/test yaml-lint"
+      context: ci/prow/yaml-lint
       always_run: true
       skip_report: false
       agent: kubernetes
